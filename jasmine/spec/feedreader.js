@@ -31,12 +31,26 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
+        it('feed URL is defined and not empty', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url).not.toBeNull();
+                expect(feed.url).not.toBe('');
+            });
+        });
 
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        it('feed name is defined and not empty', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.name).toBeDefined();
+                expect(feed.name).not.toBeNull();
+                expect(feed.name).not.toBe('');
+            });
+        });
     });
 
 
@@ -54,6 +68,20 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
+    describe('The menu', function() {
+        it('ensures the menu element is hidden by default', function() {
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
+
+        it('ensures the menu changes visibility when the menu icon is clicked', function() {
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).not.toBe(true);
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
+    });
+
+
     /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO: Write a test that ensures when the loadFeed
@@ -63,10 +91,45 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
+    describe('Initial Entries', function() {
+        beforeEach(function(done) {
+            loadFeed(0 ,function() {
+                done();
+            });
+        });
+
+        it('there is at least a single .entry element within the .feed container', function(done) {
+            // Find if there is at least 1 .entry elemet in .feed container
+            expect($('.feed').find(".entry").length).toBeGreaterThan(1);
+            done();
+        });
+    });
+
     /* TODO: Write a new test suite named "New Feed Selection"
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        
+    describe('New Feed Selection', function() {
+        var firstNewsTitleList,
+            secondNewsTitleList;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
+        beforeEach(function(done) {
+            $('.feed').empty();
+            loadFeed(0 ,function() {
+                firstNewsTitleList = $('.feed').find("h2").text();
+            });
+            loadFeed(1 , function() {
+                secondNewsTitleList = $('.feed').find("h2").text();
+                done();
+            });
+        });
+        it('ensures a new feed is loaded and the content actually changes', function(done) {
+            expect(firstNewsTitleList).not.toEqual(secondNewsTitleList);
+            done();
+        });
+
+    });
 }());
