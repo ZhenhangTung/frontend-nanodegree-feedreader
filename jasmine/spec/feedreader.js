@@ -115,14 +115,13 @@ $(function() {
     describe('New Feed Selection', function() {
         var firstNewsTitleList,
             secondNewsTitleList;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
         beforeEach(function(done) {
             $('.feed').empty();
             loadFeed(0 ,function() {
-                firstNewsTitleList = $('.feed').find("h2").text();
+                firstNewsTitleList = $('.feed').find("h2");
             });
             loadFeed(1 , function() {
-                secondNewsTitleList = $('.feed').find("h2").text();
+                secondNewsTitleList = $('.feed').find("h2");
                 done();
             });
         });
