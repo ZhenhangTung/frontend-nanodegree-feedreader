@@ -99,9 +99,9 @@ $(function() {
         beforeEach(function(done) {
             $('.feed').empty();
             loadFeed(0 ,function() {
-                firstNewsTitleListText = $('.feed').find("h2").text();
+                firstNewsTitleList = $('.feed').find("h2").text();
                 loadFeed(1 , function() {
-                    secondNewsTitleListText = $('.feed').find("h2").text();
+                    secondNewsTitleList = $('.feed').find("h2").text();
                     done();
                 });
             });
